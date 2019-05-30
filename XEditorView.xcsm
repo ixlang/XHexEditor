@@ -1,0 +1,53 @@
+//xlang Source, Name:XEditorView.xcsm 
+//Date: Thu May 13:00:03 2019 
+
+class XEditorView : QXMdiSubWindow{
+
+	HexEditor editor = new HexEditor();
+    HexWorkspace workspace;
+	XEditorView(HexWorkspace s){
+		workspace = s;
+    }
+    
+    bool create(QXWidget parent){
+		super.create(parent);
+		if (editor.create() == false){
+			return false;
+		}
+        
+        setWidget(editor);
+        editor.init(workspace);
+        editor.show();
+        return true;
+    }
+    
+    byte [] readData(String file){
+        return new FileStream.FileInputStream(file).read();
+    }
+    
+    void open(String file){
+		byte [] data = readData(file);
+        if (data != nilptr){
+			editor.setData(data);
+            setWindowTitle(file);
+        }else{
+			close();
+        }
+    }
+    
+    
+	bool onClose()override{
+		//TODO 
+        editor.clear();
+        return true;
+	}
+
+	void setFont(QXFont f){
+		editor.setFont(f);
+    }
+    
+    void flashCaret(){
+		editor.flashCaret();
+    }
+    
+};

@@ -1,0 +1,57 @@
+{
+	"XHexEditor":	{
+		"version":	"1.2",
+		"language":	"xlang",
+		"sources":	["XHexEditor.xcs", "ui/dialog.ui", ".\\HexEditor.xcsm", ".\\HexWorkspace.xcsm", ".\\XEditorView.xcsm"],
+		"configures":	{
+			"debug":	{
+				"path":	{
+					"incpath":	[],
+					"libpath":	["libs"]
+				},
+				"options":	"",
+				"prebuild":	"",
+				"preclean":	"",
+				"makebuild":	"",
+				"makeclean":	"",
+				"afterbuild":	"",
+				"afterclean":	"",
+				"ignorewarning":	"",
+				"debugable":	"-dbg",
+				"debugdatabase":	"",
+				"libs":	["XPlatform_1.0.0.2.lix", "FileSystem_1.0.0.2.lix", "FileStream_1.0.0.2.lix", "Qt5.9.1_5.9.1.7.lix"],
+				"cmd":	"$(Output)",
+				"args":	"$(Output)",
+				"workdir":	"$(ProjectDir)",
+				"wtype":	"",
+				"ostype":	"",
+				"outname":	"$(ProjectName)$(Ext)",
+				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
+				"command":	"-ce",
+				"uaclevel":	"默认"
+			},
+			"release":	{
+				"path":	{
+					"incpath":	[],
+					"libpath":	["libs"]
+				},
+				"options":	"-nd",
+				"cmd":	"$(Output)",
+				"args":	"$(Output)",
+				"workdir":	"$(ProjectDir)",
+				"wtype":	"",
+				"ostype":	"",
+				"outname":	"$(ProjectName)$(Ext)",
+				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
+				"command":	"-ce",
+				"uaclevel":	"默认",
+				"ignorewarning":	"",
+				"debugable":	"",
+				"debugdatabase":	"-nd",
+				"libs":	["XPlatform_1.0.0.2.lix", "FileSystem_1.0.0.2.lix", "FileStream_1.0.0.2.lix", "Qt5.9.1_5.9.1.7.lix"]
+			}
+		},
+		"versioninc":	"0",
+		"icofile":	"win.ico"
+	}
+}

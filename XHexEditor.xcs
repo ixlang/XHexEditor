@@ -1,0 +1,128 @@
+// xlang
+
+class MainDialog : QXMainWindow{
+
+	//HexEditor hexwidget = new HexEditor();
+	HexWorkspace _mdiArea = new HexWorkspace();
+    TriggerEvent _triggerEvent = new TriggerEvent();
+    QXStatusBar statusBar;
+    String blackstyle;
+    
+	bool create()override{
+		QXBuffer qb = new QXBuffer();
+        byte [] buffer = __xPackageResource("ui/dialog.ui");
+		byte [] qssbuffer = __xPackageResource("black.qss");
+        
+        qb.setBuffer(buffer, 0, buffer.length);
+	
+		if (load(qb)){
+			setWindowIcon("win.png");
+            blackstyle = new String(qssbuffer);
+			//attachByName(hexwidget, "hexwidget");
+            attachByName(_mdiArea, "mdiArea");
+            statusBar = getStatusBar();
+            _mdiArea.setStatusBar(statusBar);
+            init();
+            //hexwidget.setData(readData());
+            //setStyleSheet("black.qss");
+            return true;
+		}
+        return false;
+	}
+    
+    
+    
+    class TriggerEvent : onEventListener{
+        void onTrigger(QXObject obj)override{
+            String name = obj.getName();
+            if (name.equals("actionnewfile")){
+				//app._mdiArea.doNewFile();
+                return ;
+            }
+            if (name.equals("actionopenfile")){
+				_mdiArea.doOpen();
+                return ;
+            }
+            if (name.equals("actionsavefile")){
+				//app._mdiArea.doOpen();
+                return ;
+            }
+            if (name.equals("actionsaveall")){
+				//app._mdiArea.doOpen();
+                return ;
+            }
+            if (name.equals("actionselfont")){
+				_mdiArea.selfont();
+                return ;
+            }
+            
+            if (name.equals("actionexit")){
+				_system_.exit(0);
+                return ;
+            }
+            
+            if (name.equals("actionblackstyle")){
+				setStyleSheetString(blackstyle);
+                return ;
+            }
+            
+            if (name.equals("actionnormalstyle")){
+				setStyleSheetString("");
+                return ;
+            }
+        }
+    };
+     
+	bool onClose()override{
+		//TODO 
+        _mdiArea.closeWorkspace();
+        return true;
+	}
+
+
+    void init(){
+		_mdiArea.init();
+		/**一定要给顶级菜单设置 否则action无效*/
+		findByName("menu_F").setOnEventListener(_triggerEvent);
+        findByName("menu_O").setOnEventListener(_triggerEvent);
+        
+        findByName("actionselfont").setOnEventListener(_triggerEvent);
+		findByName("actionnewfile").setOnEventListener(_triggerEvent);
+        findByName("actionopenfile").setOnEventListener(_triggerEvent);
+        findByName("actionsavefile").setOnEventListener(_triggerEvent);
+        findByName("actionsaveall").setOnEventListener(_triggerEvent);
+        findByName("actionexit").setOnEventListener(_triggerEvent);
+        
+        findByName("actionblackstyle").setOnEventListener(_triggerEvent);
+        findByName("actionnormalstyle").setOnEventListener(_triggerEvent);
+        
+    }
+  
+};
+
+
+class XMyApp : QXApplication {
+
+	MainDialog dialog;
+
+    bool create(){
+        if (super.createQXApplication()){
+            dialog = new MainDialog();
+            if (dialog.create()){
+				dialog.show();
+                return true;
+            }
+        }
+        return false;
+    }
+    
+};
+
+
+int main(String [] args){
+	XMyApp app = new XMyApp();
+    if (app.create()){
+		app.run();
+    }
+	return 0;
+}
