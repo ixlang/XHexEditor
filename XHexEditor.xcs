@@ -121,8 +121,10 @@ class XMyApp : QXApplication {
 
 int main(String [] args){
 	XMyApp app = new XMyApp();
+    
     if (app.create()){
 		app.run();
     }
+
 	return 0;
 }

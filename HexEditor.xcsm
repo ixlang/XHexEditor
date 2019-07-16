@@ -158,7 +158,7 @@ class HexEditor : QXWidget{
     }
 
 	void drawScroll(QXPainter canvas, int l,int t,int r,int b){
-		if (hexdata != nilptr){
+		if (hexdata != nilptr && hexdata.length > 16){
 			double pos = (double)currentposition / (double)hexdata.length;
 			scrollbarheight = ((b - t) / lineheight)  * (b - t) / (hexdata.length / 16);
             if (scrollbarheight < b - t - 20){
