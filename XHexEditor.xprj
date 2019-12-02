@@ -16,10 +16,6 @@
 				"makeclean":	"",
 				"afterbuild":	"",
 				"afterclean":	"",
-				"ignorewarning":	"",
-				"debugable":	"-dbg",
-				"debugdatabase":	"",
-				"libs":	["XPlatform_1.0.0.2.lix", "FileSystem_1.0.0.2.lix", "FileStream_1.0.0.2.lix", "Qt5.9.1_5.9.1.7.lix"],
 				"cmd":	"$(Output)",
 				"args":	"$(Output)",
 				"workdir":	"$(ProjectDir)",
@@ -28,7 +24,18 @@
 				"outname":	"$(ProjectName)$(Ext)",
 				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
 				"command":	"-ce",
-				"uaclevel":	"默认"
+				"uaclevel":	"默认",
+				"ignorewarning":	"",
+				"compdest":	"",
+				"ignorewl":	"",
+				"debugable":	"-dbg",
+				"debugdatabase":	"",
+				"libs":	["XPlatform_1.0.0.2.lix", "FileSystem_1.0.0.2.lix", "FileStream_1.0.0.2.lix", "Qt5.9.1_5.9.1.14.lix"],
+				"links":	[],
+				"depends":	[{
+						"name":	"Qt5.9.1",
+						"version":	"5.9.1.14"
+					}]
 			},
 			"release":	{
 				"path":	{
@@ -51,7 +58,7 @@
 				"libs":	["XPlatform_1.0.0.2.lix", "FileSystem_1.0.0.2.lix", "FileStream_1.0.0.2.lix", "Qt5.9.1_5.9.1.7.lix"]
 			}
 		},
-		"versioninc":	"0",
-		"icofile":	"win.ico"
+		"icofile":	"win.ico",
+		"versioninc":	"0"
 	}
 }

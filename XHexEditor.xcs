@@ -95,7 +95,8 @@ class MainDialog : QXMainWindow{
         
         findByName("actionblackstyle").setOnEventListener(_triggerEvent);
         findByName("actionnormalstyle").setOnEventListener(_triggerEvent);
-        
+        /*_mdiArea.doOpen();
+        _mdiArea.selfont();*/
     }
   
 };

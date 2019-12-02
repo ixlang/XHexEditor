@@ -102,6 +102,9 @@ class HexEditor : QXWidget{
     
 	void init(HexWorkspace works){
 		workspace = works;
+        //setWindowFlags(WindowCloseButtonHint);
+        setFocusPolicy(WheelFocus);
+        setAttribute(WA_InputMethodEnabled,true);
 		linepaint.setStyle(QXPainter.Paint.STROKE);
         linepaint.setColor(0x7f000000);
         linepaint.setStrokeWidth(2.0);
