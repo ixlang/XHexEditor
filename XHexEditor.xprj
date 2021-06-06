@@ -19,23 +19,30 @@
 				"cmd":	"$(Output)",
 				"args":	"$(Output)",
 				"workdir":	"$(ProjectDir)",
-				"wtype":	"",
-				"ostype":	"",
-				"outname":	"$(ProjectName)$(Ext)",
-				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
-				"command":	"-ce",
-				"uaclevel":	"默认",
 				"ignorewarning":	"",
 				"compdest":	"",
 				"ignorewl":	"",
 				"debugable":	"-dbg",
 				"debugdatabase":	"",
-				"libs":	["XPlatform_1.0.0.2.lix", "FileSystem_1.0.0.2.lix", "FileStream_1.0.0.2.lix", "Qt5.9.1_5.9.1.14.lix"],
+				"libs":	["XPlatform_1.0.0.5.lix", "FileStream_1.0.0.8.lix", "Qt_5.15.2.2.lix"],
 				"links":	[],
 				"depends":	[{
-						"name":	"Qt5.9.1",
-						"version":	"5.9.1.14"
-					}]
+						"name":	"XPlatform",
+						"version":	"1.0.0.5"
+					}, {
+						"name":	"FileStream",
+						"version":	"1.0.0.8"
+					}, {
+						"name":	"Qt",
+						"version":	"5.15.2.2"
+					}],
+				"wtype":	"",
+				"ostype":	"",
+				"sstype":	"",
+				"outname":	"$(ProjectName)$(Ext)",
+				"outpath":	"$(ProjectDir)/$(Arch)/$(Configure)",
+				"command":	"-ce",
+				"uaclevel":	"默认"
 			},
 			"release":	{
 				"path":	{
@@ -58,7 +65,7 @@
 				"libs":	["XPlatform_1.0.0.2.lix", "FileSystem_1.0.0.2.lix", "FileStream_1.0.0.2.lix", "Qt5.9.1_5.9.1.7.lix"]
 			}
 		},
-		"icofile":	"win.ico",
-		"versioninc":	"0"
+		"versioninc":	"0",
+		"icofile":	"win.ico"
 	}
 }

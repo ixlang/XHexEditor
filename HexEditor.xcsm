@@ -1,10 +1,10 @@
 //xlang Source, Name:HexEditor.xcsm 
 //Date: Wed May 19:00:42 2019 
 
-class HexEditor : QXWidget{
+class HexEditor : QWidget{
 
-	QXPainter.Paint linepaint = new QXPainter.Paint(), 
-		hexfont = new QXPainter.Paint();
+	QPainter.Paint linepaint = new QPainter.Paint(), 
+		hexfont = new QPainter.Paint();
     HexWorkspace workspace;
     int currentposition = 0;
     int mouseposition = -1;
@@ -14,7 +14,7 @@ class HexEditor : QXWidget{
 
     bool hilightCaret = false;
     bool hex_offset = true;
-    QXRect fontsize;
+    QRect fontsize;
     
     int fontwidth = 20, fontheight = 20;
     int line_padding = 2;
@@ -31,13 +31,13 @@ class HexEditor : QXWidget{
     int asciibegin = hex_right + 20;
     int scrollbarheight = 0, scrolltop = 0;
     
-    QXFont _font = nilptr;
-    void setFont(QXFont font){
+    QFont _font = nilptr;
+    public void setFont(QFont font){
 		_font = font;
         fontsize = nilptr;
     }
 	void onPaint(int l,int t,int r,int b,long hpaint)override{
-        QXPainter canvas = new QXPainter(hpaint);
+        QPainter canvas = new QPainter(hpaint);
         if (_font != nilptr){
 			canvas.setFont(_font);
         }
@@ -54,13 +54,13 @@ class HexEditor : QXWidget{
         drawScroll(canvas, l, t, r, b);
 	}
     
-    void setData(byte [] d){
+    public void setData(byte [] d){
 		hexdata = d;
         currentposition = 0;
         mouseposition = 0;
     }
     
-    void calcFontHeight(QXPainter canvas){
+    void calcFontHeight(QPainter canvas){
 		fontsize = canvas.measureText(0,0,"X");
         fontwidth = fontsize.width();
         fontheight = fontsize.height();
@@ -71,12 +71,12 @@ class HexEditor : QXWidget{
         topbegin = fontheight * 2.5;
     }
     
-    void drawBack(QXPainter canvas, int l,int t,int r,int b){
-        canvas.fillRect(l,t,r - 20,b,0xffffffff,QXBrush.Style.SolidPattern);
-        canvas.fillRect(l,t,r - 20,lineheight,0xffccccff,QXBrush.Style.SolidPattern);
+    void drawBack(QPainter canvas, int l,int t,int r,int b){
+        canvas.fillRect(l,t,r - 20,b,0xffffffff,QBrush.Style.SolidPattern);
+        canvas.fillRect(l,t,r - 20,lineheight,0xffccccff,QBrush.Style.SolidPattern);
     }
     
-    void drawGrid(QXPainter canvas, int l,int t,int r,int b){
+    void drawGrid(QPainter canvas, int l,int t,int r,int b){
         drawTextInRect(canvas, 0, 0, 120, lineheight, "偏移量");
         drawTextInRect(canvas, hex_left, 0, hex_right, lineheight, "十六进制");
         drawTextInRect(canvas, hex_right, 0, 1000, lineheight, "ASCII");
@@ -93,34 +93,34 @@ class HexEditor : QXWidget{
         canvas.restore();
     }
     
-    void drawTextInRect(QXPainter canvas, int l,int t,int r,int b, String text){
-		QXRect rc = canvas.measureText(0,0,text);
+    void drawTextInRect(QPainter canvas, int l,int t,int r,int b, String text){
+		QRect rc = canvas.measureText(0,0,text);
         canvas.drawText(text, (l+r - rc.width()) / 2, t + (t+b - rc.height()) / 2 + rc.height());
     }
     
     
     
-	void init(HexWorkspace works){
+	public void init(HexWorkspace works){
 		workspace = works;
         //setWindowFlags(WindowCloseButtonHint);
-        setFocusPolicy(WheelFocus);
-        setAttribute(WA_InputMethodEnabled,true);
-		linepaint.setStyle(QXPainter.Paint.STROKE);
+        setFocusPolicy(Constant.WheelFocus);
+        setAttribute(Constant.WA_InputMethodEnabled,true);
+		linepaint.setStyle(QPainter.Paint.STROKE);
         linepaint.setColor(0x7f000000);
         linepaint.setStrokeWidth(2.0);
-        hexfont.setStyle(QXPainter.Paint.STROKE);
+        hexfont.setStyle(QPainter.Paint.STROKE);
         hexfont.setColor(0xff0000ff);
 	}
 
-	void flashCaret(){
+	public void flashCaret(){
 		hilightCaret = !hilightCaret;
         postUpdate();
     }
 
-	void clear(){
+	public void clear(){
     
     }
-	void drawData(QXPainter canvas){
+	void drawData(QPainter canvas){
 		int totalLine = height() / lineheight + 1;
         for (int i =0; i < totalLine; i++){
 			drawLine(canvas, hexbegin, topbegin + i * lineheight, hexdata, currentposition + i * 16);
@@ -128,7 +128,7 @@ class HexEditor : QXWidget{
     }
 
     
-	void drawLine(QXPainter canvas, int x,int y, byte [] data, int position){
+	void drawLine(QPainter canvas, int x,int y, byte [] data, int position){
 		long max = Math.min(16l,data.length - position);
         if (max > 0){
         
@@ -145,12 +145,12 @@ class HexEditor : QXWidget{
                 int ax = asciibegin + asciiwidth * i ;
                 
                 if (id == mouseposition && hilightCaret){
-					canvas.fillRect(dx ,dy,hexwidth,lineheight,0x7f0000ff,QXBrush.Style.SolidPattern);
-                    canvas.fillRect(ax ,dy,asciiwidth,lineheight,0x7f0000ff,QXBrush.Style.SolidPattern);
+					canvas.fillRect(dx ,dy,hexwidth,lineheight,0x7f0000ff,QBrush.Style.SolidPattern);
+                    canvas.fillRect(ax ,dy,asciiwidth,lineheight,0x7f0000ff,QBrush.Style.SolidPattern);
                 }else
                 if (id >= sb && id <= se){
-					canvas.fillRect(dx ,dy,hexwidth,lineheight,0x3f0000ff,QXBrush.Style.SolidPattern);
-                    canvas.fillRect(ax ,dy,asciiwidth,lineheight,0x3f0000ff,QXBrush.Style.SolidPattern);
+					canvas.fillRect(dx ,dy,hexwidth,lineheight,0x3f0000ff,QBrush.Style.SolidPattern);
+                    canvas.fillRect(ax ,dy,asciiwidth,lineheight,0x3f0000ff,QBrush.Style.SolidPattern);
                 }
                 
 				canvas.drawText(String.format("%02X",b), dx + hexpadding, y);
@@ -160,17 +160,17 @@ class HexEditor : QXWidget{
         }
     }
 
-	void drawScroll(QXPainter canvas, int l,int t,int r,int b){
+	void drawScroll(QPainter canvas, int l,int t,int r,int b){
 		if (hexdata != nilptr && hexdata.length > 16){
 			double pos = (double)currentposition / (double)hexdata.length;
 			scrollbarheight = ((b - t) / lineheight)  * (b - t) / (hexdata.length / 16);
             if (scrollbarheight < b - t - 20){
-				canvas.fillRect(r - 18,t,18,b,0x3f000000,QXBrush.Style.SolidPattern);
+				canvas.fillRect(r - 18,t,18,b,0x3f000000,QBrush.Style.SolidPattern);
 				if (scrollbarheight < 18){
 					scrollbarheight = 18;
 				}
 				scrolltop = (b - t - scrollbarheight) * pos;
-				canvas.fillRect(r - 18,scrolltop,18,scrollbarheight,0x7f000000,QXBrush.Style.SolidPattern);
+				canvas.fillRect(r - 18,scrolltop,18,scrollbarheight,0x7f000000,QBrush.Style.SolidPattern);
             }
         }
     }
@@ -259,29 +259,29 @@ class HexEditor : QXWidget{
         bool bupdate = false;
         
         switch(key){
-			case Key_PageDown:
+			case Constant.Key_PageDown:
 				int totalLine = height() / lineheight + 1;
 				currentposition +=  totalLine * 16;
 				bupdate = true;
             break;
-            case Key_PageUp:
+            case Constant.Key_PageUp:
 				int totalLine = height() / lineheight + 1;
 				currentposition -=  totalLine * 16;
 				bupdate = true;
             break;
-            case Key_Left:
+            case Constant.Key_Left:
 				mouseposition--;
                 bupdate = true;
             break;
-            case Key_Right:
+            case Constant.Key_Right:
 				mouseposition++;
                 bupdate = true;
             break;
-            case Key_Up:
+            case Constant.Key_Up:
 				mouseposition-=16;
                 bupdate = true;
             break;
-            case Key_Down:
+            case Constant.Key_Down:
 				mouseposition+=16;
                 bupdate = true;
             break;

@@ -1,15 +1,15 @@
 //xlang Source, Name:XEditorView.xcsm 
 //Date: Thu May 13:00:03 2019 
 
-class XEditorView : QXMdiSubWindow{
+class XEditorView : QMdiSubWindow{
 
 	HexEditor editor = new HexEditor();
     HexWorkspace workspace;
-	XEditorView(HexWorkspace s){
+	public XEditorView(HexWorkspace s){
 		workspace = s;
     }
     
-    bool create(QXWidget parent){
+    public bool create(QWidget parent){
 		super.create(parent);
 		if (editor.create() == false){
 			return false;
@@ -25,7 +25,7 @@ class XEditorView : QXMdiSubWindow{
         return new FileStream.FileInputStream(file).read();
     }
     
-    void open(String file){
+    public void open(String file){
 		byte [] data = readData(file);
         if (data != nilptr){
 			editor.setData(data);
@@ -42,11 +42,11 @@ class XEditorView : QXMdiSubWindow{
         return true;
 	}
 
-	void setFont(QXFont f){
+	public void setFont(QFont f){
 		editor.setFont(f);
     }
     
-    void flashCaret(){
+    public void flashCaret(){
 		editor.flashCaret();
     }
     

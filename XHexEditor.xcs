@@ -1,15 +1,17 @@
 // xlang
-
-class MainDialog : QXMainWindow{
+using {
+    Qt;
+};
+class MainDialog : QMainWindow{
 
 	//HexEditor hexwidget = new HexEditor();
 	HexWorkspace _mdiArea = new HexWorkspace();
     TriggerEvent _triggerEvent = new TriggerEvent();
-    QXStatusBar statusBar;
+    QStatusBar statusBar;
     String blackstyle;
     
-	bool create()override{
-		QXBuffer qb = new QXBuffer();
+	public bool create()override{
+		QBuffer qb = new QBuffer();
         byte [] buffer = __xPackageResource("ui/dialog.ui");
 		byte [] qssbuffer = __xPackageResource("black.qss");
         
@@ -33,7 +35,7 @@ class MainDialog : QXMainWindow{
     
     
     class TriggerEvent : onEventListener{
-        void onTrigger(QXObject obj)override{
+        public void onTrigger(QObject obj)override{
             String name = obj.getName();
             if (name.equals("actionnewfile")){
 				//app._mdiArea.doNewFile();
@@ -73,14 +75,14 @@ class MainDialog : QXMainWindow{
         }
     };
      
-	bool onClose()override{
+	public bool onClose()override{
 		//TODO 
         _mdiArea.closeWorkspace();
         return true;
 	}
 
 
-    void init(){
+    public void init(){
 		_mdiArea.init();
 		/**一定要给顶级菜单设置 否则action无效*/
 		findByName("menu_F").setOnEventListener(_triggerEvent);
@@ -102,12 +104,12 @@ class MainDialog : QXMainWindow{
 };
 
 
-class XMyApp : QXApplication {
+class XMyApp : QApplication {
 
 	MainDialog dialog;
 
-    bool create(){
-        if (super.createQXApplication()){
+    public bool create(){
+        if (super.createQApplication()){
             dialog = new MainDialog();
             if (dialog.create()){
 				dialog.show();

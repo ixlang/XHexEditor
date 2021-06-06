@@ -1,25 +1,25 @@
 //xlang Source, Name:HexWorkspace.xcsm 
 //Date: Thu May 12:56:10 2019 
 
-class HexWorkspace : QXMdiArea{
+class HexWorkspace : QMdiArea{
 
-	QXStatusBar statusbar;
+	QStatusBar statusbar;
     bool bQuit = false;
-	HexWorkspace(){
+	public HexWorkspace(){
 		super(0);
     }
 
     
     
-	void doOpen(){
-		String file = QXFileDialog.getOpenFileName("打开文件","","*.*",this);
+	public void doOpen(){
+		String file = QFileDialog.getOpenFileName("打开文件","","*.*",this);
         if (file != nilptr && file.length() != 0){
 			XEditorView view = (XEditorView)createSubWnd(true);
             view.open(file);
         }
     }
     
-    QXMdiSubWindow createSubWnd(bool bshow){
+    QMdiSubWindow createSubWnd(bool bshow){
         XEditorView wnd = new XEditorView(this);
         if (wnd.create(this)){
 			
@@ -32,15 +32,15 @@ class HexWorkspace : QXMdiArea{
         return nilptr;
     }
     
-    void selfont(){
+    public void selfont(){
 		XEditorView wnd = (XEditorView)currentSubWindow();
         if (wnd != nilptr){
-			String font = QXFontDialog.getFontDialog("选择字体","",this);
-            wnd.setFont(QXFont.loadFromString(font));
+			String font = QFontDialog.getFontDialog("选择字体","",this);
+            wnd.setFont(QFont.loadFromString(font));
         }
     }
     
-    void init(){
+    public void init(){
 		new Thread(){
 			void run()override{
 				while (bQuit == false){
@@ -59,18 +59,18 @@ class HexWorkspace : QXMdiArea{
         }.start();
     }
     
-    void setStatusBar(QXStatusBar sb){
+    public void setStatusBar(QStatusBar sb){
 		statusbar = sb;
     }
     
     
-    void closeWorkspace(){
+    public void closeWorkspace(){
 		synchronized(this){
 			bQuit = true;
 		}
     }
     
-    void showStatus(String text){
+    public void showStatus(String text){
 		statusbar.showMessage(text);
     }
 };
